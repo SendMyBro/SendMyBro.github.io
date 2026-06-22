@@ -91,6 +91,14 @@ ul { list-style: none; }
   box-shadow: 0 16px 30px rgba(255, 107, 107, .38);
 }
 .btn-block { width: 100%; }
+.btn-block.btn-primary {
+  background: var(--coral);
+  box-shadow: 0 12px 24px rgba(255, 107, 107, .32);
+}
+.btn-block.btn-primary:hover {
+  background: var(--coral-dark);
+  box-shadow: 0 18px 32px rgba(255, 107, 107, .42);
+}
 
 /* ---------- Pills / eyebrows ---------- */
 .pill {
@@ -106,19 +114,41 @@ ul { list-style: none; }
   color: var(--coral-dark);
 }
 .eyebrow {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-weight: 900;
   font-size: .78rem;
   letter-spacing: .18em;
   color: var(--teal-dark);
-  background: var(--teal-soft);
-  padding: 7px 16px;
-  border-radius: 999px;
+  background: none;
+  padding: 0;
+  border-radius: 0;
   margin-bottom: 18px;
 }
-.eyebrow-light {
-  color: #7eeaf4;
-  background: rgba(0, 184, 201, .16);
+.eyebrow-spark {
+  width: 28px;
+  height: auto;
+  color: var(--coral);
+  flex: none;
+}
+.eyebrow-light { color: #7eeaf4; }
+.eyebrow-light .eyebrow-spark { color: var(--coral); }
+
+/* Two-tone section titles — inline so they wrap naturally by content length */
+.section-title .t-dark { color: var(--charcoal); }
+.section-title .t-teal { color: var(--teal); }
+.why-us .section-title .t-dark { color: #fff; }
+.why-us .section-title .t-teal { color: #5fe1ef; }
+.title-heart {
+  display: inline;
+  width: 0.85em;
+  height: 0.85em;
+  color: var(--coral);
+  vertical-align: middle;
+  margin-left: 8px;
+  position: relative;
+  top: -2px;
 }
 
 /* ---------- Script accents ---------- */
@@ -134,7 +164,7 @@ ul { list-style: none; }
 /* ---------- Section scaffolding ---------- */
 .section { padding: 100px 0; position: relative; }
 .section-head {
-  max-width: 720px;
+  max-width: 900px;
   margin: 0 auto 56px;
   text-align: center;
   position: relative;
@@ -194,8 +224,14 @@ ul { list-style: none; }
   align-items: center;
   justify-content: space-between;
   height: 78px;
+  overflow: visible;
 }
-.nav-logo img { width: 150px; height: auto; }
+.nav-logo {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+}
+.nav-logo img { width: 110px; height: auto; }
 .nav-links {
   display: flex;
   align-items: center;
@@ -215,7 +251,16 @@ ul { list-style: none; }
   color: var(--teal-dark);
   background: var(--teal-soft);
 }
-.nav-cta { margin-left: 10px; padding: 11px 22px; }
+.nav-cta {
+  margin-left: 10px;
+  padding: 11px 22px;
+  background: var(--coral);
+  box-shadow: 0 12px 24px rgba(255, 107, 107, .32);
+}
+.nav-cta:hover {
+  background: var(--coral-dark);
+  box-shadow: 0 18px 32px rgba(255, 107, 107, .42);
+}
 
 .hamburger {
   display: none;
@@ -414,7 +459,55 @@ ul { list-style: none; }
   color: var(--teal-dark);
 }
 .tick svg { width: 15px; height: 15px; }
-.about-close { text-align: center; margin-top: 44px; font-size: 1.6rem; }
+.about-close-wrap {
+  margin-top: 52px;
+  display: flex;
+  justify-content: center;
+}
+
+.about-close-brush {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 28px 80px 32px 80px;
+  background: url('images/brush-stroke-teal.png') center center / 100% 100% no-repeat;
+  min-height: 110px;
+  max-width: 780px;
+  width: 100%;
+}
+
+.about-close-heart {
+  flex-shrink: 0;
+  width: 54px;
+  height: auto;
+  filter: brightness(0) invert(1);
+  opacity: 0.92;
+  position: relative;
+  z-index: 1;
+}
+
+.about-close {
+  color: var(--white);
+  font-size: 1.35rem;
+  line-height: 1.55;
+  font-weight: 700;
+  text-align: center;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.18);
+}
+
+.about-close em {
+  font-family: var(--script);
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-style: italic;
+  display: block;
+  margin-top: 2px;
+}
 
 /* ============================================================
    SERVICES
@@ -586,7 +679,7 @@ ul { list-style: none; }
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 26px;
-  align-items: center;
+  align-items: stretch;
 }
 .plan-card {
   background: var(--white);
@@ -607,6 +700,23 @@ ul { list-style: none; }
   z-index: 1;
 }
 .plan-featured:hover { transform: scale(1.05) translateY(-6px); }
+.plan-featured-red {
+  border-color: var(--coral);
+  box-shadow: 0 26px 54px rgba(255, 107, 107, .18);
+}
+.plan-featured-red .plan-price .amount { color: var(--coral); }
+.plan-featured-red .tick {
+  background: rgba(255, 107, 107, .12);
+  color: var(--coral-dark);
+}
+.plan-featured-red .btn-primary {
+  background: var(--coral);
+  box-shadow: 0 12px 24px rgba(255, 107, 107, .32);
+}
+.plan-featured-red .btn-primary:hover {
+  background: var(--coral-dark);
+  box-shadow: 0 18px 32px rgba(255, 107, 107, .42);
+}
 .plan-ribbon {
   position: absolute;
   top: -16px;
@@ -630,7 +740,7 @@ ul { list-style: none; }
 .plan-tag { color: var(--muted); font-size: .96rem; margin-top: 4px; }
 .plan-price { margin: 20px 0 24px; display: flex; align-items: baseline; gap: 4px; }
 .plan-price .amount { font-size: 2.6rem; font-weight: 900; color: var(--teal); }
-.plan-featured .plan-price .amount { color: var(--teal-dark); }
+.plan-featured:not(.plan-featured-red) .plan-price .amount { color: var(--teal-dark); }
 .plan-price .period { color: var(--muted); font-weight: 700; }
 .plan-list { display: grid; gap: 13px; margin-bottom: 28px; flex: 1; }
 .plan-list li { display: flex; gap: 12px; align-items: flex-start; font-size: .95rem; }
@@ -878,6 +988,10 @@ a.contact-block:hover { transform: translateX(4px); box-shadow: var(--shadow-sof
   .section { padding: 72px 0; }
   .trust-bar { grid-template-columns: 1fr 1fr; padding: 22px; gap: 18px; }
   .about-grid { grid-template-columns: 1fr; }
+  .about-close-brush { padding: 22px 32px 26px 28px; gap: 14px; min-height: 90px; }
+  .about-close { font-size: 1.15rem; }
+  .about-close em { font-size: 1.25rem; }
+  .about-close-heart { width: 40px; }
   .contact-grid { grid-template-columns: 1fr; gap: 26px; }
 }
 
