@@ -142,12 +142,6 @@
       '<textarea id="' + id + '" name="' + id + '"></textarea>' +
       '</div>';
   }
-  function fileField(id, label) {
-    return '<div class="field">' +
-      '<label for="' + id + '">' + label + '</label>' +
-      '<input type="file" id="' + id + '" name="' + id + '" accept="image/*" multiple>' +
-      '</div>';
-  }
   function planSelectField() {
     return '<div class="field">' +
       '<label for="planChoice">Preferred Plan</label>' +
@@ -170,8 +164,7 @@
       case 'quote':
         html = textField('serviceRequiredQuote', 'Service Required') +
                textField('propertyAddress', 'Property Address') +
-               textField('preferredDate', 'Preferred Date', 'date') +
-               fileField('photos', 'Photos (optional)');
+               textField('preferredDate', 'Preferred Date', 'date');
         break;
       case 'plan':
         html = textField('planAddress', 'Property Address') +
@@ -193,18 +186,46 @@
     });
   }
 
-  /* ---------- 7. Submit confirmation ---------- */
+  /* ---------- 7. Form submission via Web3Forms ---------- */
   var form = document.getElementById('contactForm');
   var success = document.getElementById('formSuccess');
   if (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      success.hidden = false;
-      success.textContent = 'Thank you! Your enquiry has been sent — we’ll be in touch shortly.';
-      form.reset();
-      renderDynamicFields('');
-      success.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      window.setTimeout(function () { success.hidden = true; }, 8000);
+
+      var submitBtn = form.querySelector('[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+
+      var formData = new FormData(form);
+      formData.append('access_key', 'cef5372c-9907-4701-91af-0ae2473057cf');
+      formData.append('subject', 'New Enquiry from Send My Brother Website');
+      formData.append('from_name', 'Send My Brother Website');
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
+      })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          if (data.success) {
+            success.hidden = false;
+            success.textContent = "Thank you! Your enquiry has been sent - we'll be in touch shortly.";
+            form.reset();
+            renderDynamicFields('');
+            success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            window.setTimeout(function () { success.hidden = true; }, 8000);
+          } else {
+            alert('Something went wrong. Please try again or contact us directly at admin@sendmybrother.com');
+          }
+        })
+        .catch(function () {
+          alert('Something went wrong. Please try again or contact us directly at admin@sendmybrother.com');
+        })
+        .finally(function () {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send Message';
+        });
     });
   }
 })();
